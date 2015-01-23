@@ -4,14 +4,14 @@
             "Aztech\\Coyote\\":"src/"
         }
     },
+    "keywords": [ "mail", "mailgun", "mandrill", "sms", "twilio" ]
     "name":"aztech/coyote",
     "type":"library",
     "description":"PHPEmailabstractionlayer",
     "license":"MIT",
     "require":{
         "php":">=5.3",
-        "monolog/monolog":"1.7.0",
-        "twilio/sdk": "~3.12"
+        "monolog/monolog":"1.7.0"
     },
     "require-dev":{
         "videlalvaro/php-amqplib":"~2",
@@ -19,7 +19,8 @@
         "phpunit/phpunit":"~4.1",
         "squizlabs/php_codesniffer":"~2",
         "humbug/humbug":"dev-master",
-        "mandrill/mandrill": "~1.0"
+        "mandrill/mandrill": "~1.0",
+        "twilio/sdk": "~3.12"
     },
     "suggest":{
         "mailgun/mailgun-php":"Tosendmessagesusingmailgun(v1.7)",
