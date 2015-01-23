@@ -55,7 +55,7 @@ class Mandrill implements Mailer
     {
         $templateVariables = [];
 
-        foreach ($this->variables as $variable => $value)  {
+        foreach ($message->getVariables() as $variable => $value)  {
             $templateVariables[] = [
             'name' => $variable,
             'content' => $value
