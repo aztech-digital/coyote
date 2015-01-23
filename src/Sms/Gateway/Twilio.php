@@ -24,7 +24,7 @@ class Twilio implements MessageGateway
      */
     public function send(Message $message)
     {
-        if (empty($message->getRecipients()) {
+        if (empty($message->getRecipients())) {
             throw new \InvalidArgumentException('Message has no recipients');
         }
 
