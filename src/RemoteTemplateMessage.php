@@ -16,4 +16,9 @@ class RemoteTemplateMessage extends Message
     {
         $this->variables = $values;
     }
+    
+    public function getVariables()
+    {
+        return $this->variables;
+    }
 }
