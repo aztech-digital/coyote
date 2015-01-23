@@ -10,7 +10,8 @@
     "license":"MIT",
     "require":{
         "php":">=5.3",
-        "monolog/monolog":"1.7.0"
+        "monolog/monolog":"1.7.0",
+        "twilio/sdk": "~3.12"
     },
     "require-dev":{
         "videlalvaro/php-amqplib":"~2",
