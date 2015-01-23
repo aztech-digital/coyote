@@ -16,6 +16,7 @@ class Mandrill implements Mailer
 
     public function __construct(\Mandrill $mandrill, $defaultFrom)
     {
+        $this->mandrill = $mandrill;
         $this->defaultFrom = new Address($defaultFrom);
     }
 
