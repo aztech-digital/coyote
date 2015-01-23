@@ -22,14 +22,19 @@ class Mandrill implements Mailer
 
     public function send(Message $message)
     {
-        $data = [[
+        $data = [
             'to'   => $this->mapRecipients($message)
-        ]];
+        ];
 
         $messages = new \Mandrill_Messages($this->mandrill);
 
         if ($message instanceof RemoteTemplateMessage) {
-            $messages->sendTemplate($message->getBody(), $this->mapTemplateVariables($message), $data);
+
+            $response = $messages->sendTemplate($message->getBody(), $this->mapTemplateVariables($message), $data);
+
+            if ($data['status'] !== 'sent') {
+                throw new \RuntimeException('Send failed: ' . $data['reject_reason']);
+            }
         }
         else {
             throw new \RuntimeException('Non templated messages not implemented.');
