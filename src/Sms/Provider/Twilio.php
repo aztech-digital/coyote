@@ -24,7 +24,9 @@ class Twilio implements Provider
      */
     public function send(Message $message)
     {
-        if (empty($message->getRecipients())) {
+        $recipients = $message->getRecipients();
+
+        if (empty($recipients)) {
             throw new \InvalidArgumentException('Message has no recipients');
         }
 
