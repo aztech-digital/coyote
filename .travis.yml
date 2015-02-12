@@ -1,0 +1,33 @@
+language: php
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - hhvm
+
+env:
+  - PHP_CURRENT='5.6'
+
+before_script:
+  - composer selfupdate
+  - travis_retry composer install --dev --prefer-source
+
+script:
+  - make phpunit
+  - if [ $(phpenv version-name) = $PHP_CURRENT ]; then make test-upload; fi
+  - if [ $(phpenv version-name) = $PHP_CURRENT ]; then make phpcs bugfree; fi
+
+after_script:
+  - make clean
+
+matrix:
+  fast_finish: true
+
+notifications:
+  webhooks:
+    urls:
+      - http://derricks.io/repositories/buildhook/
+    on_success: always
+    on_failure: always
+    on_start: always
