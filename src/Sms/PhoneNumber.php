@@ -1,6 +1,6 @@
 <?php
 
-namespace Aztech\Coyote;
+namespace Aztech\Coyote\Sms;
 
 class PhoneNumber
 {

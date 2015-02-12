@@ -1,6 +1,6 @@
 <?php
 
-namespace Aztech\Coyote;
+namespace Aztech\Coyote\Email;
 
 class RemoteTemplateMessage extends Message
 {
@@ -16,7 +16,7 @@ class RemoteTemplateMessage extends Message
     {
         $this->variables = $values;
     }
-    
+
     public function getVariables()
     {
         return $this->variables;

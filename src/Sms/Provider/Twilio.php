@@ -1,12 +1,12 @@
 <?php
 
-namespace Aztech\Coyote\Sms\Gateway;
+namespace Aztech\Coyote\Sms\Provider;
 
-use Aztech\Coyote\Sms\MessageGateway;
 use Aztech\Coyote\Sms\Message;
-use Aztech\Coyote\PhoneNumber;
+use Aztech\Coyote\Sms\PhoneNumber;
+use Aztech\Coyote\Sms\Provider;
 
-class Twilio implements MessageGateway
+class Twilio implements Provider
 {
 
     private $twilio;
@@ -33,8 +33,7 @@ class Twilio implements MessageGateway
         foreach ($data as $item) {
             try {
                 $this->twilio->account->messages->create($item);
-            }
-            catch (\Services_Twilio_RestException $exception) {
+            } catch (\Services_Twilio_RestException $exception) {
                 throw new \RuntimeException($exception->getMessage(), 0, $exception);
             }
         }

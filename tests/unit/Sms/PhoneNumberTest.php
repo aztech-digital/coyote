@@ -2,7 +2,7 @@
 
 namespace Aztech\Coyote\Tests;
 
-use Aztech\Coyote\PhoneNumber;
+use Aztech\Coyote\Sms\PhoneNumber;
 
 class PhoneNumberTest extends \PHPUnit_Framework_TestCase
 {

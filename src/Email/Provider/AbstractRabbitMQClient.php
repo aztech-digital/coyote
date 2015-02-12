@@ -1,23 +1,24 @@
 <?php
 
-namespace Aztech\Coyote\Mailer;
+namespace Aztech\Coyote\Email\Provider;
 
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\NullLogger;
-use Psr\Log\LoggerInterface;
+use PhpAmqpLib\Channel\AbstractChannel;
 use PhpAmqpLib\Connection\AbstractConnection;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 abstract class AbstractRabbitMQClient implements LoggerAwareInterface
 {
     /**
      *
-     * @var \PhpAmqpLib\Connection\AbstractConnection
+     * @var AbstractConnection
      */
     private $connection;
 
     /**
      *
-     * @var \Psr\Log\LoggerInterface
+     * @var LoggerInterface
      */
     private $logger;
 
@@ -32,11 +33,19 @@ abstract class AbstractRabbitMQClient implements LoggerAwareInterface
         $this->connection = $connection;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see \Psr\Log\LoggerAwareInterface::setLogger()
+     */
     public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
 
+    /**
+     *
+     * @return NullLogger
+     */
     protected function getLogger()
     {
         return $this->logger ?: new NullLogger();
@@ -44,7 +53,7 @@ abstract class AbstractRabbitMQClient implements LoggerAwareInterface
 
     /**
      *
-     * @return \PhpAmqpLib\Channel\AbstractChannel
+     * @return AbstractChannel
      */
     protected function getChannel()
     {

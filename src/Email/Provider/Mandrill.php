@@ -1,13 +1,13 @@
 <?php
 
-namespace Aztech\Coyote\Mailer;
+namespace Aztech\Coyote\Email\Provider;
 
-use Aztech\Coyote\Mailer;
-use Aztech\Coyote\Address;
-use Aztech\Coyote\Message;
-use Aztech\Coyote\RemoteTemplateMessage;
+use Aztech\Coyote\Email\Address;
+use Aztech\Coyote\Email\Message;
+use Aztech\Coyote\Email\Provider;
+use Aztech\Coyote\Email\RemoteTemplateMessage;
 
-class Mandrill implements Mailer
+class Mandrill implements Provider
 {
 
     private $mandrill;
@@ -29,14 +29,12 @@ class Mandrill implements Mailer
         $messages = new \Mandrill_Messages($this->mandrill);
 
         if ($message instanceof RemoteTemplateMessage) {
-
             $response = $messages->sendTemplate($message->getBody(), $this->mapTemplateVariables($message), $data);
 
-            if ($data['status'] !== 'sent') {
-                throw new \RuntimeException('Send failed: ' . $data['reject_reason']);
+            if ($response['status'] !== 'sent') {
+                throw new \RuntimeException('Send failed: ' . $response['reject_reason']);
             }
-        }
-        else {
+        } else {
             throw new \RuntimeException('Non templated messages not implemented.');
         }
     }
@@ -60,7 +58,7 @@ class Mandrill implements Mailer
     {
         $templateVariables = [];
 
-        foreach ($message->getVariables() as $variable => $value)  {
+        foreach ($message->getVariables() as $variable => $value) {
             $templateVariables[] = [
             'name' => $variable,
             'content' => $value

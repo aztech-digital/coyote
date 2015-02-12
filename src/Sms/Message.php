@@ -2,8 +2,6 @@
 
 namespace Aztech\Coyote\Sms;
 
-use Aztech\Coyote\PhoneNumber;
-
 /**
  * Class for storing phone numbers, and formatting them using international notation;
  *

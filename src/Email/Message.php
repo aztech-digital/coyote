@@ -1,6 +1,6 @@
 <?php
 
-namespace Aztech\Coyote;
+namespace Aztech\Coyote\Email;
 
 /**
  * Email message class.
@@ -30,19 +30,19 @@ class Message
 
     /**
      *
-     * @var \Aztech\Coyote\Address
+     * @var Address
      */
     private $sender = null;
 
     /**
      *
-     * @var \Aztech\Coyote\Address[]
+     * @var Address[]
      */
     private $recipients = array();
 
     /**
      * Returns the sender address or null if it is not set.
-     * @return \Aztech\Coyote\Address
+     * @return Address
      */
     public function getSender()
     {
@@ -51,9 +51,9 @@ class Message
 
     /**
      * Sets the sender address.
-     * @param \Aztech\Coyote\Address $sender
+     * @param Address $sender
      */
-    public function setSender(\Aztech\Coyote\Address $sender)
+    public function setSender(Address $sender)
     {
         $this->sender = $sender;
     }
@@ -107,13 +107,13 @@ class Message
 
     /**
      * Sets the recipient addresses. This method replaces any previously added recipient.
-     * @param \Aztech\Coyote\Address[] $recipients
-     * @throws InvalidArgumentException when $recipients contains elements that are not instances of Mail_Address.
+     * @param Address[] $recipients
+     * @throws \InvalidArgumentException when $recipients contains elements that are not instances of Mail_Address.
      */
     public function setRecipients(array $recipients = array())
     {
         foreach ($recipients as $recipient) {
-            if (! $recipient instanceof \Aztech\Coyote\Address) {
+            if (! $recipient instanceof Address) {
                 throw new \InvalidArgumentException('$recipients can only contain instances of Mail_Address.');
             }
         }
@@ -123,16 +123,16 @@ class Message
 
     /**
      * Adds a recipient to the mail.
-     * @param \Aztech\Coyote\Address $recipient
+     * @param Address $recipient
      */
-    public function addRecipient(\Aztech\Coyote\Address $recipient)
+    public function addRecipient(Address $recipient)
     {
         $this->recipients[] = $recipient;
     }
 
     /**
      * Returns all set recipients.
-     * @return \Aztech\Coyote\Address[]
+     * @return Address[]
      */
     public function getRecipients()
     {

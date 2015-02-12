@@ -3,7 +3,7 @@
 namespace Aztech\Coyote\Tests\Sms;
 
 use Aztech\Coyote\Sms\Message;
-use Aztech\Coyote\PhoneNumber;
+use Aztech\Coyote\Sms\PhoneNumber;
 
 class MessageTest extends \PHPUnit_Framework_TestCase
 {

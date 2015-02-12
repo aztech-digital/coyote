@@ -1,6 +1,6 @@
 <?php
 
-namespace Aztech\Coyote;
+namespace Aztech\Coyote\Email;
 
 /**
  * Email address class providing formatting methods compliant to RFC2822-3.4 specifications.
@@ -19,7 +19,9 @@ class Address
 
     public function __construct($address, $displayName = '')
     {
-        if (trim($address) == '') { throw new \InvalidArgumentException('$address cannot be an empty string.'); }
+        if (trim($address) == '') {
+            throw new \InvalidArgumentException('$address cannot be an empty string.');
+        }
 
         $this->address = trim($address);
         $this->displayName = trim($displayName);
@@ -50,7 +52,8 @@ class Address
     public function getDisplayName()
     {
         if (!empty($this->displayName)) {
-            return $this->displayName; }
+            return $this->displayName;
+        }
 
         return $this->getAddressWithoutDomain();
     }

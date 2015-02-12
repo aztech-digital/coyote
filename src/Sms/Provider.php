@@ -2,7 +2,7 @@
 
 namespace Aztech\Coyote\Sms;
 
-interface MessageGateway
+interface Provider
 {
     public function send(Message $message);
 }

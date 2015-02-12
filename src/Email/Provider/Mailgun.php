@@ -1,17 +1,20 @@
 <?php
 
-namespace Aztech\Coyote\Mailer;
+namespace Aztech\Coyote\Email\Provider;
 
-use \Aztech\Coyote\Mailer;
-use \Aztech\Coyote\Message;
+use \Aztech\Coyote\Email\Message;
+use \Aztech\Coyote\Email\Provider;
+use Mailgun\Mailgun as MailgunApi;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
-class Mailgun implements Mailer
+class Mailgun implements Provider, LoggerAwareInterface
 {
 
     /**
      *
-     * @var \Mailgun\Mailgun
+     * @var MailgunApi
      */
     private $mailgun;
 
@@ -23,18 +26,27 @@ class Mailgun implements Mailer
 
     /**
      *
-     * @var \Psr\Log\LoggerInterface
+     * @var LoggerInterface
      */
     private $logger;
 
-    public function __construct(\Mailgun\Mailgun $mailgun, $domain)
+    /**
+     *
+     * @param MailgunApi $mailgun
+     * @param string $domain
+     */
+    public function __construct(MailgunApi $mailgun, $domain)
     {
         $this->mailgun = $mailgun;
         $this->domain = $domain;
         $this->logger = new NullLogger();
     }
 
-    public function setLogger($logger)
+    /**
+     *
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
@@ -42,6 +54,7 @@ class Mailgun implements Mailer
     public function send(Message $message)
     {
         $postData = $this->convertMessage($message);
+
         $this->logger->info(sprintf('Forwarding mail "%s" to "%s"', $postData['subject'], $postData['to']));
 
         $result = $this->mailgun->sendMessage($this->domain, $postData);
@@ -70,8 +83,7 @@ class Mailgun implements Mailer
 
     private function convertAddresses(array $addresses)
     {
-        return implode(',', array_map(function ($address)
-        {
+        return implode(',', array_map(function ($address) {
             return $address->getAsNameAddress();
         }, $addresses));
     }
