@@ -29,10 +29,10 @@ class Mandrill implements Provider
         $messages = new \Mandrill_Messages($this->mandrill);
 
         if ($message instanceof RemoteTemplateMessage) {
-            $messages->sendTemplate($message->getBody(), $this->mapTemplateVariables($message), $data);
+            $response = $messages->sendTemplate($message->getBody(), $this->mapTemplateVariables($message), $data);
 
-            if ($data['status'] !== 'sent') {
-                throw new \RuntimeException('Send failed: ' . $data['reject_reason']);
+            if ($response[0]['status'] !== 'sent') {
+                throw new \RuntimeException('Send failed: ' . $response[0]['reject_reason']);
             }
         } else {
             throw new \RuntimeException('Non templated messages not implemented.');
