@@ -12,11 +12,28 @@ Coyote is a library to send emails and text messages with support for multiple p
 
 ## Setup
 
+### Install the library
+
 [Composer](https://getcomposer.org) is the only supported way of installing Coyote. From the root of your project, run the following command:
 
 ```
 composer require aztech/coyote
 ```
+
+### Pick a provider
+
+Coyote is only an abstraction layer on top of existing SDK's, and by default, does not include those in order to avoid loading too many packages in your project.
+
+Here's the list of the required packages to be able to use each provider:
+
+#### For email
+
+- Mandrill: `composer require mandrill/mandrill:~1.0`
+- Mailgun: `composer require mailgun/mailgun:~1.7`
+
+#### For text messages
+
+- Twilio: `composer require twilio/sdk:~3.12`
 
 ## Features
 
