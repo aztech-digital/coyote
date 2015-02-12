@@ -14,6 +14,10 @@ class PhoneNumber
             $countryCode = substr($countryCode, 1);
         }
 
+        if (substr($number, 0, 1) == '+') {
+            $number = substr($number, 1);
+        }
+
         $this->countryCode = $countryCode;
         $this->number = $number;
     }
