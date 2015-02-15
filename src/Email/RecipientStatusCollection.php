@@ -39,8 +39,7 @@ class RecipientStatusCollection
     {
         if (! $status->isSuccess()) {
             $this->errors[$this->count++] = $status;
-        }
-        else {
+        } else {
             $this->successes[$this->count++] = $status;
         }
     }

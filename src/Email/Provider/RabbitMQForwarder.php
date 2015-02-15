@@ -4,11 +4,10 @@ namespace Aztech\Coyote\Email\Provider;
 
 use Aztech\Coyote\Email\Message;
 use Aztech\Coyote\Email\Provider;
+use Aztech\Coyote\Email\RecipientStatusCollection;
+use Aztech\Coyote\Email\RemoteTemplateMessage;
 use PhpAmqpLib\Connection\AbstractConnection;
 use PhpAmqpLib\Message\AMQPMessage;
-use Aztech\Coyote\Email\RemoteTemplateMessage;
-use Aztech\Coyote\Email\RecipientStatus;
-use Aztech\Coyote\Email\RecipientStatusCollection;
 
 class RabbitMQForwarder extends AbstractRabbitMQClient implements Provider
 {

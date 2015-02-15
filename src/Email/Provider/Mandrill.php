@@ -5,8 +5,8 @@ namespace Aztech\Coyote\Email\Provider;
 use Aztech\Coyote\Email\Address;
 use Aztech\Coyote\Email\Message;
 use Aztech\Coyote\Email\Provider;
-use Aztech\Coyote\Email\RemoteTemplateMessage;
 use Aztech\Coyote\Email\RecipientStatusCollection;
+use Aztech\Coyote\Email\RemoteTemplateMessage;
 
 class Mandrill implements Provider
 {
@@ -45,7 +45,7 @@ class Mandrill implements Provider
         return $status;
     }
 
-    public function addResponseToStatus(\Aztech\Coyote\Email\RecipientStatusCollection $status, array $response)
+    public function addResponseToStatus(RecipientStatusCollection $status, array $response)
     {
         foreach ($response as $recipientStatus) {
             if (! $recipientStatus['status'] == 'sent') {

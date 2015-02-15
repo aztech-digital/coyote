@@ -4,12 +4,12 @@ namespace Aztech\Coyote\Email\Provider;
 
 use Aztech\Coyote\Email\Message;
 use Aztech\Coyote\Email\Provider;
+use Aztech\Coyote\Email\RecipientStatusCollection;
 use Aztech\Coyote\Email\RemoteTemplateMessage;
 use Mailgun\Mailgun as MailgunApi;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
-use Aztech\Coyote\Email\RecipientStatusCollection;
 
 class Mailgun implements Provider, LoggerAwareInterface
 {
@@ -66,8 +66,7 @@ class Mailgun implements Provider, LoggerAwareInterface
 
         if ($result->http_response_code != 200) {
             $status->addMessageStatus($message, false, "Send failed.");
-        }
-        else {
+        } else {
             $status->addMessageStatus($message, true);
         }
 

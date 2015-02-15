@@ -17,14 +17,14 @@ endif
 
 ifeq "$(STRICT)" "1"
 phpcs: pretest
-	vendor/bin/phpcs --standard=PSR2 src
+	vendor/bin/phpcs --standard=PSR1,PSR2 src
 else
 phpcs: pretest
-	vendor/bin/phpcs --standard=PSR2 -n src
+	vendor/bin/phpcs --standard=PSR1,PSR2 -n src
 endif
 
 phpcbf: pretest
-	vendor/bin/phpcbf --standard=PSR2 src
+	vendor/bin/phpcbf --standard=PSR1,PSR2 src
 
 bugfree: pretest
 	[ ! -f bugfree.json ] || vendor/bin/bugfree generateConfig
