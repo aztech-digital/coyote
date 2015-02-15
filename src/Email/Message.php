@@ -36,16 +36,21 @@ class Message
 
     /**
      *
-     * @var Address[]
+     * @var AddressCollection
      */
     private $recipients = null;
 
     /**
      *
-     * @var Address[]
+     * @var AddressCollection
      */
     private $ccRecipients = null;
 
+    /**
+     *
+     * @var AddressCollection
+     */
+    private $bccRecipients = null;
 
     /**
      *
@@ -135,8 +140,9 @@ class Message
         return $this->isHtml;
     }
 
-    /**unknown
+    /**
      * Returns all set recipients.
+     *
      * @return AddressCollection
      */
     public function getRecipients()
@@ -146,11 +152,22 @@ class Message
 
     /**
      * Returns all set carbon-copy recipients.
+     *
      * @return AddressCollection
      */
     public function getCcRecipients()
     {
         return $this->ccRecipients;
+    }
+
+    /**
+     * Returns all set blind carbon-copy recipients.
+     *
+     * @return AddressCollection
+     */
+    public function getBccRecipients()
+    {
+        return $this->bccRecipients;
     }
 
     /**

@@ -9,6 +9,7 @@ use Mailgun\Mailgun as MailgunApi;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Aztech\Coyote\Email\RecipientStatusCollection;
 
 class Mailgun implements Provider, LoggerAwareInterface
 {
@@ -60,16 +61,22 @@ class Mailgun implements Provider, LoggerAwareInterface
 
         $this->logger->info(sprintf('Forwarding mail "%s" to "%s"', $postData['subject'], $postData['to']));
 
+        $status = new RecipientStatusCollection();
         $result = $this->mailgun->sendMessage($this->domain, $postData);
 
         if ($result->http_response_code != 200) {
-            throw new \RuntimeException('Call to remote mailer failed.');
+            $status->addMessageStatus($message, false, "Send failed.");
         }
+        else {
+            $status->addMessageStatus($message, true);
+        }
+
+        return $status;
     }
 
     public function sendRemoteTemplateMessage(RemoteTemplateMessage $message)
     {
-        return $this->sendMessage($message);
+        throw new \BadMethodCallException('Mailgun does not provide remote templates.');
     }
 
     /**

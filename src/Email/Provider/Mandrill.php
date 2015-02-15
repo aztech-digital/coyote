@@ -6,6 +6,7 @@ use Aztech\Coyote\Email\Address;
 use Aztech\Coyote\Email\Message;
 use Aztech\Coyote\Email\Provider;
 use Aztech\Coyote\Email\RemoteTemplateMessage;
+use Aztech\Coyote\Email\RecipientStatusCollection;
 
 class Mandrill implements Provider
 {
@@ -34,14 +35,27 @@ class Mandrill implements Provider
         ];
 
         $messages = new \Mandrill_Messages($this->mandrill);
-        $variables = $this->mapTemplateVariables($message);
+        $status = new RecipientStatusCollection();
 
+        $variables = $this->mapTemplateVariables($message);
         $response = $messages->sendTemplate($message->getBody(), $variables, $data);
 
-        if ($response[0]['status'] !== 'sent') {
-            throw new \RuntimeException('Send failed: ' . $response[0]['reject_reason']);
+        $this->addResponseToStatus($status, $response);
+
+        return $status;
+    }
+
+    public function addResponseToStatus(\Aztech\Coyote\Email\RecipientStatusCollection $status, array $response)
+    {
+        foreach ($response as $recipientStatus) {
+            if (! $recipientStatus['status'] == 'sent') {
+                $status->add($recipientStatus['email'], false, $recipientStatus['reject_reason']);
+            } else {
+                $status->add($recipientStatus['email'], true);
+            }
         }
     }
+
 
     private function mapRecipients(Message $message)
     {
