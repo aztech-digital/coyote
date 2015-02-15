@@ -10,6 +10,8 @@ use Aztech\Coyote\Email\RemoteTemplateMessage;
 class Mandrill implements Provider
 {
 
+    use ProviderTrait;
+
     private $mandrill;
 
     private $defaultFrom;
@@ -20,22 +22,24 @@ class Mandrill implements Provider
         $this->defaultFrom = new Address($defaultFrom);
     }
 
-    public function send(Message $message)
+    public function sendMessage(Message $message)
+    {
+        throw new \RuntimeException('Non templated messages not implemented.');
+    }
+
+    public function sendRemoteTemplateMessage(RemoteTemplateMessage $message)
     {
         $data = [
             'to'   => $this->mapRecipients($message)
         ];
 
         $messages = new \Mandrill_Messages($this->mandrill);
+        $variables = $this->mapTemplateVariables($message);
 
-        if ($message instanceof RemoteTemplateMessage) {
-            $response = $messages->sendTemplate($message->getBody(), $this->mapTemplateVariables($message), $data);
+        $response = $messages->sendTemplate($message->getBody(), $variables, $data);
 
-            if ($response[0]['status'] !== 'sent') {
-                throw new \RuntimeException('Send failed: ' . $response[0]['reject_reason']);
-            }
-        } else {
-            throw new \RuntimeException('Non templated messages not implemented.');
+        if ($response[0]['status'] !== 'sent') {
+            throw new \RuntimeException('Send failed: ' . $response[0]['reject_reason']);
         }
     }
 

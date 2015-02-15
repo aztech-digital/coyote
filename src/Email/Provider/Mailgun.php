@@ -2,8 +2,9 @@
 
 namespace Aztech\Coyote\Email\Provider;
 
-use \Aztech\Coyote\Email\Message;
-use \Aztech\Coyote\Email\Provider;
+use Aztech\Coyote\Email\Message;
+use Aztech\Coyote\Email\Provider;
+use Aztech\Coyote\Email\RemoteTemplateMessage;
 use Mailgun\Mailgun as MailgunApi;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
@@ -11,6 +12,8 @@ use Psr\Log\NullLogger;
 
 class Mailgun implements Provider, LoggerAwareInterface
 {
+
+    use ProviderTrait;
 
     /**
      *
@@ -51,7 +54,7 @@ class Mailgun implements Provider, LoggerAwareInterface
         $this->logger = $logger;
     }
 
-    public function send(Message $message)
+    public function sendMessage(Message $message)
     {
         $postData = $this->convertMessage($message);
 
@@ -62,6 +65,11 @@ class Mailgun implements Provider, LoggerAwareInterface
         if ($result->http_response_code != 200) {
             throw new \RuntimeException('Call to remote mailer failed.');
         }
+    }
+
+    public function sendRemoteTemplateMessage(RemoteTemplateMessage $message)
+    {
+        return $this->sendMessage($message);
     }
 
     /**

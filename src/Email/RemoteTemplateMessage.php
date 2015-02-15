@@ -21,4 +21,9 @@ class RemoteTemplateMessage extends Message
     {
         return $this->variables;
     }
+
+    public function acceptProvider(Provider $provider)
+    {
+        return $provider->sendRemoteTemplateMessage($this);
+    }
 }
