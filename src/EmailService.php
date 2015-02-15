@@ -38,7 +38,6 @@ class EmailService
         $message->addRecipient($to);
         
         foreach ($cc as $recipient) {
-            
         }
 
         $message->setBody($body);

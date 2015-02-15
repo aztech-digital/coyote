@@ -41,7 +41,7 @@ class Message
     private $recipients = null;
     
     /**
-     * 
+     *
      * @var Address[]
      */
     private $ccRecipients = null;
@@ -49,7 +49,7 @@ class Message
     public function __construct()
     {
         $this->recipients = new AddressCollection();
-        $this->ccRecipients = new AddressCollection(); 
+        $this->ccRecipients = new AddressCollection();
     }
     
     /**
@@ -91,7 +91,7 @@ class Message
 
     /**
      * Gets the mail subject
-     * 
+     *
      * @return string
      */
     public function getSubject()
@@ -101,7 +101,7 @@ class Message
 
     /**
      * Sets the mail subject.
-     * 
+     *
      * @param string $title
      */
     public function setSubject($subject)

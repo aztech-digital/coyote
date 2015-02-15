@@ -10,14 +10,14 @@ namespace Aztech\Coyote\Email;
 class AddressCollection implements \Countable, \Iterator
 {
     /**
-     * 
+     *
      * @var Address[]
      */
     private $addresses = [];
     
     /**
      * Initialize a new collection with an optional list of addresses.
-     * 
+     *
      * @param array $addresses
      */
     public function __construct(array $addresses = [])
@@ -26,7 +26,7 @@ class AddressCollection implements \Countable, \Iterator
     }
     
     /**
-     * 
+     *
      * @param Address $address
      */
     public function addAddress(Address $address)
