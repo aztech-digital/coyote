@@ -22,6 +22,10 @@ class Address
         if (trim($address) == '') {
             throw new \InvalidArgumentException('$address cannot be an empty string.');
         }
+        
+        if (filter_var($address, FILTER_VALIDATE_EMAIL) === false) {
+            throw new \InvalidArgumentException('Invalid email address: ' . $address);
+        }
 
         $this->address = trim($address);
         $this->displayName = trim($displayName);

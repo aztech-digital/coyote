@@ -26,7 +26,7 @@ class Message
      *
      * @var string
      */
-    private $title = '';
+    private $subject = '';
 
     /**
      *
@@ -38,8 +38,20 @@ class Message
      *
      * @var Address[]
      */
-    private $recipients = array();
+    private $recipients = null;
+    
+    /**
+     * 
+     * @var Address[]
+     */
+    private $ccRecipients = null;
 
+    public function __construct()
+    {
+        $this->recipients = new AddressCollection();
+        $this->ccRecipients = new AddressCollection(); 
+    }
+    
     /**
      * Returns the sender address or null if it is not set.
      * @return Address
@@ -79,20 +91,22 @@ class Message
 
     /**
      * Gets the mail subject
+     * 
      * @return string
      */
-    public function getTitle()
+    public function getSubject()
     {
-        return $this->title;
+        return $this->subject;
     }
 
     /**
      * Sets the mail subject.
+     * 
      * @param string $title
      */
-    public function setTitle($title)
+    public function setSubject($subject)
     {
-        $this->title = $title;
+        $this->subject = $subject;
     }
 
     /**
@@ -104,38 +118,30 @@ class Message
         $this->body = $body;
         $this->isHtml = true;
     }
-
+    
     /**
-     * Sets the recipient addresses. This method replaces any previously added recipient.
-     * @param Address[] $recipients
-     * @throws \InvalidArgumentException when $recipients contains elements that are not instances of Mail_Address.
+     * @return boolean
      */
-    public function setRecipients(array $recipients = array())
+    public function isHtmlMessage()
     {
-        foreach ($recipients as $recipient) {
-            if (! $recipient instanceof Address) {
-                throw new \InvalidArgumentException('$recipients can only contain instances of Mail_Address.');
-            }
-        }
-
-        $this->recipients = $recipients;
-    }
-
-    /**
-     * Adds a recipient to the mail.
-     * @param Address $recipient
-     */
-    public function addRecipient(Address $recipient)
-    {
-        $this->recipients[] = $recipient;
+        return $this->isHtml;
     }
 
     /**
      * Returns all set recipients.
-     * @return Address[]
+     * @return AddressCollection
      */
     public function getRecipients()
     {
         return $this->recipients;
+    }
+    
+    /**
+     * Returns all set carbon-copy recipients.
+     * @return AddressCollection
+     */
+    public function getCcRecipients()
+    {
+        return $this->ccRecipients;
     }
 }

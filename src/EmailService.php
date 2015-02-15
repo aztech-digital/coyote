@@ -30,15 +30,31 @@ class EmailService
         return $this->mailer->send($message);
     }
 
-    public function sendRaw($from, $to, $body)
+    public function sendRaw($from, $to, $body, array $cc = [], array $bcc = [])
     {
         $message = new Message();
 
         $message->setSender(new Address($from));
         $message->addRecipient($to);
+        
+        foreach ($cc as $recipient) {
+            
+        }
 
         $message->setBody($body);
 
+        return $this->mailer->send($message);
+    }
+    
+    public function sendHtml($from, $to, $body)
+    {
+        $message = new Message();
+    
+        $message->setSender(new Address($from));
+        $message->addRecipient($to);
+    
+        $message->setBody($body);
+    
         return $this->mailer->send($message);
     }
 }

@@ -25,7 +25,7 @@ class TemplateMessage extends Message
     private function renderTemplate($content)
     {
         foreach ($this->variables as $name => $value) {
-            $content = str_replace('{{' . $name . '}}', $value, $content);
+            $content = preg_replace('/{{\s*' . $name . '\s*}}/mi', $value, $content);
         }
 
         return $content;
