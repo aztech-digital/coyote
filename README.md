@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/aztech-digital/coyote.png?branch=master)](https://travis-ci.org/aztech-digital/coyote)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/aztech-digital/coyote.svg?style=flat)](https://scrutinizer-ci.com/g/aztech-digital/coyote/?branch=master)
-[![Code Coverage](https://img.shields.io/coveralls/aztech-digital/coyote.svg?style=flat)](https://scrutinizer-ci.com/g/aztech-digital/coyote/?branch=master)
+[![Coverage Status](https://coveralls.io/repos/aztech-digital/coyote/badge.svg?branch=master)](https://coveralls.io/r/aztech-digital/coyote?branch=master)
 [![HHVM Support](https://img.shields.io/hhvm/aztech/coyote.svg)](http://hhvm.h4cc.de/package/aztech/coyote)
 
 [![License](https://img.shields.io/packagist/l/aztech/coyote.svg?style=flat)](https://packagist.org/packages/aztech/coyote)
