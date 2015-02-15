@@ -41,6 +41,9 @@ scrutinizer: ocular
 	php ocular.phar code-coverage:upload --format=php-clover tests/output/coverage.clover;
 endif
 
+coveralls:
+	php vendor/bin/coveralls
+
 clean: clean-env clean-deps
 
 clean-env:
