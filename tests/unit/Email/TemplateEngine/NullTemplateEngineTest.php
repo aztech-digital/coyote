@@ -3,9 +3,9 @@
 namespace Aztech\Coyote\Tests\Email\TemplateEngine;
 
 use Aztech\Coyote\Email\Message;
-use Aztech\Coyote\Email\TemplateEngine\SimpleTemplateEngine;
+use Aztech\Coyote\Email\TemplateEngine\NullTemplateEngine;
 
-class SimpleTemplateEngineTest extends \PHPUnit_Framework_TestCase
+class NullTemplateEngineTest extends \PHPUnit_Framework_TestCase
 {
     public function testBodyWithPlaceholderIsRenderedWithMatchingValue()
     {
@@ -15,9 +15,9 @@ class SimpleTemplateEngineTest extends \PHPUnit_Framework_TestCase
         $message->setVariable('day', 'on this fine day');
         $message->setVariable('test', 'value');
 
-        $templateEngine = new SimpleTemplateEngine();
+        $templateEngine = new NullTemplateEngine();
 
-        $this->assertEquals('Hello value, how are you on this fine day ?', $templateEngine->render($message));
+        $this->assertEquals('Hello {{ test }}, how are you {{day}} ?', $templateEngine->render($message));
     }
 
     public function testBodyWithPlaceholderIsRenderedWithMatchingValue2()
@@ -30,8 +30,8 @@ class SimpleTemplateEngineTest extends \PHPUnit_Framework_TestCase
             'test' => 'value'
         ]);
 
-        $templateEngine = new SimpleTemplateEngine();
+        $templateEngine = new NullTemplateEngine();
 
-        $this->assertEquals('Hello value, how are you on this fine day ?', $templateEngine->render($message));
+        $this->assertEquals('Hello {{ test }}, how are you {{day}} ?', $templateEngine->render($message));
     }
 }

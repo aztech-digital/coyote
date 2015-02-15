@@ -1,6 +1,6 @@
 <?php
 
-namespace Aztech\Coyote\TemplateEngine;
+namespace Aztech\Coyote\Email\TemplateEngine;
 
 use Aztech\Coyote\Email\Message;
 use Aztech\Coyote\Email\TemplateEngine;
