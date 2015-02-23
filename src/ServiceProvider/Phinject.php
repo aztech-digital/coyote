@@ -9,6 +9,7 @@ use Aztech\Phinject\ConfigurationAware;
 use Aztech\Phinject\Container;
 use Aztech\Phinject\UnbuildableServiceException;
 use Aztech\Phinject\Util\ArrayResolver;
+use Psr\Log\LoggerAwareInterface;
 
 class Phinject implements Activator, ConfigurationAware
 {
@@ -48,6 +49,7 @@ class Phinject implements Activator, ConfigurationAware
             );
         } elseif ($providerType === 'email') {
             return $this->buildEmailService(
+                $container,
                 $providerName,
                 $serviceConfig->resolveArray($providerName, [])
             );
@@ -56,16 +58,31 @@ class Phinject implements Activator, ConfigurationAware
         throw new UnbuildableServiceException('Unsupported provider type: ' . $providerType);
     }
 
-    private function buildEmailService($providerName, ArrayResolver $providerConfig)
+    private function buildEmailService(Container $container, $providerName, ArrayResolver $providerConfig)
     {
         if (! array_key_exists($providerName, $this->emailFactories)) {
             throw new UnbuildableServiceException('Unsupported provider: ' . $providerName);
         }
 
         $factory = new $this->emailFactories[$providerName]();
-        $provider = $factory->buildProvider($providerConfig->extract());
+        $provider = $factory->buildProvider($this->resolveConfigValues($container, $providerConfig->extract()));
+
+        if ($provider instanceof LoggerAwareInterface && $logger = $providerConfig->resolve('logger', false)) {
+            $provider->setLogger($container->resolve($logger));
+        }
 
         return new EmailService($provider);
+    }
+
+    private function resolveConfigValues($container, array $config)
+    {
+        $resolved = [];
+
+        foreach ($config as $name => $value) {
+            $resolved[$name] = $container->resolve($value);
+        }
+
+        return $resolved;
     }
 
     private function buildSmsService($providerName, ArrayResolver $providerConfig)

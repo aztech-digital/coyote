@@ -10,6 +10,8 @@ use Mailgun\Mailgun as MailgunApi;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Aztech\Coyote\Email\AddressCollection;
+use Aztech\Coyote\Email\TemplateEngine\SimpleTemplateEngine;
 
 class Mailgun implements Provider, LoggerAwareInterface
 {
@@ -44,6 +46,7 @@ class Mailgun implements Provider, LoggerAwareInterface
         $this->mailgun = $mailgun;
         $this->domain = $domain;
         $this->logger = new NullLogger();
+        $this->templateEngine = new SimpleTemplateEngine();
     }
 
     /**
@@ -55,6 +58,10 @@ class Mailgun implements Provider, LoggerAwareInterface
         $this->logger = $logger;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see \Aztech\Coyote\Email\Provider::sendMessage()
+     */
     public function sendMessage(Message $message)
     {
         $postData = $this->convertMessage($message);
@@ -89,16 +96,16 @@ class Mailgun implements Provider, LoggerAwareInterface
 
         $data['from'] = $message->getSender()->getAsNameAddress();
         $data['to'] = $this->convertAddresses($message->getRecipients());
-        $data['subject'] = $message->getTitle();
-        $data['html'] = $message->getBody();
+        $data['subject'] = $message->getSubject();
+        $data['html'] = $this->renderMessage($message);
 
         return $data;
     }
 
-    private function convertAddresses(array $addresses)
+    private function convertAddresses(AddressCollection $addresses)
     {
         return implode(',', array_map(function ($address) {
             return $address->getAsNameAddress();
-        }, $addresses));
+        }, $addresses->getAddresses()));
     }
 }

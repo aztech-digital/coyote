@@ -6,6 +6,7 @@ use Aztech\Coyote\Email\Address;
 use Aztech\Coyote\Email\Message;
 use Aztech\Coyote\Email\Provider;
 use Aztech\Coyote\Email\Provider\NullMailer;
+use Aztech\Coyote\Email\RecipientStatusCollection;
 
 class EmailService
 {
@@ -25,6 +26,11 @@ class EmailService
         return $this->mailer;
     }
 
+    /**
+     *
+     * @param Message $message
+     * @return RecipientStatusCollection
+     */
     public function sendMessage(Message $message)
     {
         return $this->mailer->send($message);
@@ -36,7 +42,7 @@ class EmailService
 
         $message->setSender(new Address($from));
         $message->addRecipient($to);
-        
+
         foreach ($cc as $recipient) {
         }
 
@@ -44,16 +50,16 @@ class EmailService
 
         return $this->mailer->send($message);
     }
-    
+
     public function sendHtml($from, $to, $body)
     {
         $message = new Message();
-    
+
         $message->setSender(new Address($from));
         $message->addRecipient($to);
-    
+
         $message->setBody($body);
-    
+
         return $this->mailer->send($message);
     }
 }

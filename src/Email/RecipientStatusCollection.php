@@ -46,7 +46,7 @@ class RecipientStatusCollection
 
     public function isSuccess()
     {
-        return ! empty($this->errors);
+        return empty($this->errors);
     }
 
     public function getStatuses()

@@ -63,6 +63,7 @@ class Message
     {
         $this->recipients = new AddressCollection();
         $this->ccRecipients = new AddressCollection();
+        $this->bccRecipients = new AddressCollection();
     }
 
     /**
